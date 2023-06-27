@@ -1,0 +1,177 @@
+.navContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 3;
+    background-color: #1F2225;
+    border-bottom:1px solid #444444;
+    /* backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px); */
+  }
+  
+  .nav {
+    padding-left: .25em;
+    padding-right: .25em;
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+    width: 98%;
+    max-width: 100%;
+    background-color: transparent !important;
+  }
+  
+  .navLeft {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.15s ease-in-out;
+  }
+  
+  .navMiddle {
+    display: flex;
+    margin-left: 12px;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+  }
+  
+  .link {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 16px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .link:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+  
+  .homeLink:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  
+  .navRight {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .profileImage {
+    margin-top: 6px;
+    transition: all 0.15s ease-in-out;
+  }
+  
+  .profileImage:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  
+  .homeLink {
+    font-size: 24px;
+    font-weight: 500;
+  }
+  
+  .buttonLink:hover {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+  }
+  
+  .hidden{
+    display: none;
+  }
+
+  .menuContainer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .menu {
+    position: fixed;
+    top: 0;
+    left: -400px; /* Start the menu off-screen */
+    width: 400px;
+    height: 100%;
+    background-color: #1F2225;
+    transition: left 0.3s ease-in-out;
+    z-index: 100;
+  }
+
+  .menu ul {
+    padding-top: 80px;
+    padding-left: 80px;
+    z-index: 100;
+  }
+
+  .loader {
+      padding-top: 50%;
+      padding-left: 50%;
+      z-index: 100;
+  }
+
+  .menu li {
+    z-index: 100;
+    padding: 8px 8px 8px 8px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .menu li:hover {
+    color: #f1f1f1;
+  }
+  
+  .navBtn {
+    background-color: antiquewhite;
+    font-size: 16px;
+    width: 70%;
+    color: #11B5ED;
+    padding: 8px 8px 8px 8px;
+    border-radius: 10px;
+  }
+
+  .navInput {
+    border: 1px solid #faebd7;
+    font-size: 14px;
+    width: 70%;
+    color: #11B5ED;
+    padding: 8px 8px 8px 8px;
+    border-radius: 10px;
+  }
+
+  .menuVisible {
+    left: 0; /* Slide the menu into view */
+  }
+  
+  .content {
+    margin-left: 0; /* Adjust the margin to account for the menu width */
+    transition: margin-left 0.3s ease-in-out;
+  }
+
+  
+  .toggleButton {
+    position: fixed;
+    top: 20px;
+    left: 10px;
+    z-index: 100;
+  }
+
+  .walletBtn {
+    background-color: antiquewhite !important;
+    color: #11B5ED !important;
+
+  }
+  

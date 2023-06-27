@@ -1,0 +1,36 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: #11B5ED;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+body {
+  color: #E6E8EC;
+  background: #1F2225;
+}
+
+span {
+  color: #11B5ED !important;
+}
+
+button{
+  color: #11B5ED !important;
+}
+
+button:hover{
+  color: #D15529 !important;
+}
