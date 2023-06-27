@@ -36,7 +36,7 @@ export function NavbarMain() {
                                 <Link href="https://twitter.com/_fantompets" onClick={() => setIsOpen(false)} target="_blank"><button className={styles.navBtn}>Twitter</button></Link>
                             </li>
                             <li>
-                                <button className={styles.navBtn}>Github</button>
+                                <Link href="https://github.com/fantomPets/fantomPets" className={styles.navBtn} onClick={() => setIsOpen(false)} target="_blank">Github</Link>
                             </li>
                         </ul>
                     </div>
