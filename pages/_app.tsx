@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         metamaskWallet(), 
         localWallet({ persist: true }),
         coinbaseWallet(), 
-        walletConnect({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT as string}),
+        // walletConnect({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT as string, }),
         magicLink({
           apiKey: process.env.NEXT_PUBLIC_MAGIC as string,
         }) 

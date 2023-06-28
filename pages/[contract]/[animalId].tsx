@@ -247,10 +247,10 @@ export default function GamePage()  {
     const passTime = () => {
         setPet((prevPet) => ({
         ...prevPet,
-        hunger: prevPet.hunger - 10,
-        happiness: prevPet.happiness - 10,
-        exercise: prevPet.exercise - 10,
-        sleep: prevPet.sleep - 10,
+        hunger: prevPet.hunger - 10 > 0 ? prevPet.hunger - 10 : 0,
+        happiness: prevPet.happiness - 10 > 0 ? prevPet.happiness - 10 : 0,
+        exercise: prevPet.exercise - 10 > 0 ? prevPet.exercise - 10 : 0,
+        sleep: prevPet.sleep - 10 > 0 ? prevPet.sleep - 10 : 0,
         }));
     };
 

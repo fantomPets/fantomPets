@@ -6,11 +6,16 @@ import { ThirdwebNftMedia,
     useAddress,
     useOwnedNFTs,
     MediaRenderer,
+    useConnect,
+    metamaskWallet,
+    coinbaseWallet,
+    localWallet,
 } from "@thirdweb-dev/react";
 import React, { useState, useRef, useEffect } from "react";
 import { editionDropAddress } from "../../const/details";
 import toast, { Toaster } from 'react-hot-toast';
 import toastStyle from "../../utils/toastConfig";
+import {activeChain} from "../../const/details";
 
 type Props = {
     editionDropContract: any;
@@ -19,8 +24,13 @@ type Props = {
     isNFTsLoading: boolean;
   };
 
+const metamaskConfig = metamaskWallet();
+const coinbaseConfig = coinbaseWallet();
+const localWalletConfig = localWallet();
+
 export const AnimalCard = ({ nft, animalId, isNFTsLoading, editionDropContract }: Props) => {
     const address = useAddress();
+    const connect = useConnect();
     const isLoading = isNFTsLoading;
     const id = animalId;
     const { data: ownedNfts, refetch: refetchOwnedNfts } = useOwnedNFTs(
@@ -31,6 +41,24 @@ export const AnimalCard = ({ nft, animalId, isNFTsLoading, editionDropContract }
     const ownedNft = ownedNfts?.find((ownedNft) => Number(ownedNft?.metadata?.id) === id);
     const quantityOwned = ownedNft?.quantityOwned || 0;
     const isOwned = quantityOwned > 0;
+    
+    const handleConnect = async () => {
+        try {
+          const connected = await connect(metamaskConfig);
+          if (!connected) {
+            const coinbaseConnected = await connect(coinbaseConfig);
+            if (!coinbaseConnected) {
+              await connect(localWalletConfig);
+            }
+          }
+        } catch (error) {
+          toast(`Something went wrong. Try the Login button instead.`, {
+            icon: "👻",
+            style: toastStyle,
+            position: 'top-center',
+          });
+        }
+      };
   
     return (
         <>
@@ -51,6 +79,7 @@ export const AnimalCard = ({ nft, animalId, isNFTsLoading, editionDropContract }
                     />
                     </Link>
                     ) : (
+                    <a onClick={handleConnect}>
                     <MediaRenderer
                     className={styles.nftImage}
                     src={nft.metadata.image}
@@ -58,6 +87,7 @@ export const AnimalCard = ({ nft, animalId, isNFTsLoading, editionDropContract }
                     width={"200px"}
                     height={"200px"}
                     />
+                    </a>
                     )
                 }
                 {address ? (
