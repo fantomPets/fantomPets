@@ -116,6 +116,14 @@
     font-size: 2rem;
   }
 
+  .nftImage {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    margin-top: -150px !important;
+    margin-left: -40px !important;
+  }
+
 } 
 
 .card,
@@ -133,8 +141,7 @@
   height: 200px;
   width: 200px;
   object-fit: cover;
-  margin-top: -100px !important;
-  margin-left: -40px !important;
+  margin-top: 10px
 }
 
 .nftImageCapture {
