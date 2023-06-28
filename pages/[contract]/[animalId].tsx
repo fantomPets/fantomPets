@@ -362,7 +362,7 @@ export default function GamePage()  {
                         // Draw the pet image on top of the webcam frame
                         const x = (canvas.width - (petImageElement.width/10))/12;
                         const y = (canvas.height - (petImageElement.height/10))/12;
-                        context.drawImage(petImageElement, x, y, 50, 50); // Adjust the position and size as needed
+                        context.drawImage(petImageElement, x, y, 100, 100); // Adjust the position and size as needed
                     
                         // Get the resulting image as data URL
                         const imageSrc = canvas.toDataURL("image/jpeg");
@@ -499,8 +499,8 @@ export default function GamePage()  {
                                     className={styles.nftImage}
                                     src={imgNft as string}
                                     alt={"fantomPet"}
-                                    width={"200px"}
-                                    height={"200px"}
+                                    width={"400px"}
+                                    height={"400px"}
                                     
                                    
                                 />
@@ -514,8 +514,8 @@ export default function GamePage()  {
                                 className={styles.nftImageCamera}
                                 src={imgNft as string}
                                 alt={"fantomPet"}
-                                width={"100px"}
-                                height={"100px"}
+                                width={"150px"}
+                                height={"150px"}
                                 
                             />
                         </>)}

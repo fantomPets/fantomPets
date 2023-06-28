@@ -73,7 +73,7 @@ const orbsReducer = (prevOrbs: any[], action: any) => {
 
 export default function Activity({ groundHeight, petImage}: GameProps) {
   const gameContainerRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 50, y: 0 });
+  const [position, setPosition] = useState({ x: 20, y: 0 });
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [youWin, setYouWin] = useState(false);
@@ -161,7 +161,7 @@ export default function Activity({ groundHeight, petImage}: GameProps) {
 
 
   useEffect(() => {
-    if (position.y >= groundHeight || position.y < -20) {
+    if (position.y >= groundHeight-30 || position.y < -30) {
       setGameOver(true);
     }
   }, [ position.y, groundHeight]);
@@ -169,7 +169,7 @@ export default function Activity({ groundHeight, petImage}: GameProps) {
 
   const restartGame = () => {
     setIsSpacebarPressed(false);
-    setPosition({ x: 50, y: 0 });
+    setPosition({ x: 20, y: 0 });
     setScore(0);
     setGameOver(false);
     setYouWin(false);
@@ -231,8 +231,8 @@ export default function Activity({ groundHeight, petImage}: GameProps) {
         <MediaRenderer
           src={petImage}
           alt="Pet"
-          width={"50px"}
-          height={"50px"}
+          width={"80px"}
+          height={"80px"}
           style={{
             transform: `translate(${position.x}px, ${position.y}px)`,
           }}
