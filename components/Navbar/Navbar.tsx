@@ -8,6 +8,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import toastStyle from "../../utils/toastConfig";
 import { css } from "@emotion/react";
 import { PacmanLoader } from "react-spinners";
+import Sound from "react-sound";
 
 
 const storageKey = process.env.NEXT_PUBLIC_NFT_STORAGE as string;
@@ -16,9 +17,10 @@ const client = new NFTStorage({ token: storageKey });
 type Props = {
     pet: any;
     animalId: number;
+    isGameTime: boolean;
   };
 
-export function Navbar({pet, animalId}: Props) {
+export function Navbar({pet, animalId, isGameTime}: Props) {
   
     const address = useAddress();
     const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +31,11 @@ export function Navbar({pet, animalId}: Props) {
     };
     const [petCID, setPetCID] = useState<string | null>(null);
     const [meunImage, setMenuImage] = useState<string | null>(null);
+    const [isPaused, setIsPaused] = useState(false);
+    
+    const handleSound = () => {
+        setIsPaused(!isPaused);
+    };
     
 
     const handleSave = async () => {
@@ -149,6 +156,11 @@ export function Navbar({pet, animalId}: Props) {
                             <li >
                                 <input className={styles.navInput} type="file" accept=".json" onChange={fileUpload}/>
                             </li>
+                            <li>
+                                <button className={styles.navBtn} onClick={handleSound}>
+                                    {isPaused ? "Sound On" : "Sound Off"}
+                                </button>
+                            </li>
                         </ul>
                           )}
                     </div>
@@ -183,6 +195,22 @@ export function Navbar({pet, animalId}: Props) {
                     />
                 </div>
             </div>
+            {!isGameTime &&
+                <>
+                    {!isPaused ? 
+                    <Sound url="/fPetsMenu.mp3" playStatus={Sound.status.PLAYING} volume={25} loop={true}/>
+                    : <Sound url="/fPetsMenu.mp3" playStatus={Sound.status.PAUSED} volume={25} loop={true}/>
+                    }
+                </>
+            }
+            {isGameTime &&
+                <>
+                    {!isPaused ? 
+                    <Sound url="/fPetsGame.mp3" playStatus={Sound.status.PLAYING} volume={25} loop={true}/>
+                    : <Sound url="/fPetsGame.mp3" playStatus={Sound.status.PAUSED} volume={25} loop={true}/>
+                    }
+                </>
+            }
             <Toaster
                 position="top-center"
                 reverseOrder={false}

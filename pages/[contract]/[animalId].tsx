@@ -48,7 +48,7 @@ export default function GamePage()  {
     const webcamRef = useRef<any>(null);
     const [imageSrc, setImageSrc] = useState<string | null>();
     const [imgNft, setImgNft] = useState<string | null>();
-    const [isPuased, setIsPaused] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
     const [isCameraOn, setIsCameraOn] = useState(false);
     const groundHeight = 260;
     const [gameStart, setGameStart] = useState(false);
@@ -61,6 +61,7 @@ export default function GamePage()  {
         load: true,
         loadedOnce: false,
      });
+    const [isGameTime, setIsGameTime] = useState(false);
     
     const { contract: editionDropContract } = useContract(animalContract);
     const { data: nft, isLoading: isNftLoading } = useNFT(
@@ -95,7 +96,7 @@ export default function GamePage()  {
     
 
     useEffect(() => {
-      if (!isPuased && !isSleeping) {
+      if (!isPaused && !isSleeping) {
         if (health >= 60) { 
           setImgNft(nft?.metadata.image as string)
         } else if (health >= 50) {
@@ -121,7 +122,7 @@ export default function GamePage()  {
       return () => {
         clearInterval(timer);
       };
-  }, [pet, currentTime, nft, health, isPuased, isSleeping]);
+  }, [pet, currentTime, nft, health, isPaused, isSleeping]);
 
 
 
@@ -163,7 +164,8 @@ export default function GamePage()  {
       };
 
     const endActivity = () => {
-      setGameStart(false)
+      setGameStart(false);
+      setIsGameTime(false);
       walkPet();
     };
 
@@ -397,11 +399,16 @@ export default function GamePage()  {
         }
       };
 
+    const gameTime = () => {
+        setIsGameTime(true);
+        setGameStart(true);
+    };
+
 
     return (
       <div className={styles.body}>
         <div className={styles.container}>
-            <Navbar pet={pet} animalId={id}/>
+            <Navbar pet={pet} animalId={id} isGameTime={isGameTime}/>
             {isOwned ? ( 
             <main className={styles.main}>
                 <div>
@@ -430,7 +437,7 @@ export default function GamePage()  {
                         width={42}
                         height={42}
                         priority={true}
-                        onClick={() => {setGameStart(true)}}
+                        onClick={gameTime}
                         className={styles.gamecontroller}
                 />
                 }

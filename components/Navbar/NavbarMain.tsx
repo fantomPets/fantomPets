@@ -8,6 +8,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import toastStyle from "../../utils/toastConfig";
 import { css } from "@emotion/react";
 import { PacmanLoader } from "react-spinners";
+import Sound from "react-sound";
 
 
 export function NavbarMain() {
@@ -17,7 +18,11 @@ export function NavbarMain() {
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
-   
+    const [isPaused, setIsPaused] = useState(true);
+    
+    const handleSound = () => {
+        setIsPaused(!isPaused);
+    };
 
     return (
         <div className={styles.navContainer}>
@@ -37,6 +42,11 @@ export function NavbarMain() {
                             </li>
                             <li>
                                 <Link href="https://github.com/fantomPets/fantomPets" onClick={() => setIsOpen(false)} target="_blank"><button className={styles.navBtn}>Github</button></Link>
+                            </li>
+                            <li>
+                                <button className={styles.navBtn} onClick={handleSound}>
+                                    {isPaused ? "Sound On" : "Sound Off"}
+                                </button>
                             </li>
                         </ul>
                     </div>
@@ -72,6 +82,10 @@ export function NavbarMain() {
                     />
                 </div>
             </div>
+            {!isPaused ? 
+            <Sound url="/fPetsIntro.mp3" playStatus={Sound.status.PLAYING} volume={25} loop={true}/>
+            : <Sound url="/fPetsIntro.mp3" playStatus={Sound.status.PAUSED} volume={25} loop={true}/>
+            }
             <Toaster
                 position="top-center"
                 reverseOrder={false}
