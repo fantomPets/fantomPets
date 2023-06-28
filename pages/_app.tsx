@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         metamaskWallet(), 
         localWallet({ persist: true }),
         coinbaseWallet(), 
-        walletConnect(),
+        walletConnect({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT as string}),
         magicLink({
           apiKey: process.env.NEXT_PUBLIC_MAGIC as string,
         }) 
@@ -39,12 +39,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="twitter:site" content="@_fantomPets"/>
         <meta name="twitter:title" content="fantomPets"/>
         <meta name="twitter:description" content="fantomPets"/>
-        <meta name="twitter:image" content="https://fantompets.vercel.app/logo.png"/>
-        <meta property="og:url" content="https://gm.zerobeings.xyz"/>
+        <meta name="twitter:image" content="https://fantompets.com/logo.png"/>
+        <meta property="og:url" content="https://fantompets.com"/>
         <meta property="og:type" content="website"/>
         <meta property="og:title" content="fantomPets"/>
         <meta property="og:description" content="fantomPets"/>
-        <meta property="og:image" content="https://fantompets.vercel.app/logo.png"/>
+        <meta property="og:image" content="https://fantompets.com/logo.png"/>
         <link rel="manifest" href="/manifest.webmanifest"/>
       </Head>
 
