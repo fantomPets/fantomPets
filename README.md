@@ -10,6 +10,8 @@ The goal is to design the UX for non-crypto users as much as possible. This is w
 
 We intentionally attempted to use game language and as little web3 jargon as possible throughout the application.
 
+> A fantom-testnet version of the site can be viewed here: [https://fantompets.vercel.app](https://fantompets.vercel.app)
+
 # What it does
 ## Why build a game on the Fantom Blockchain & IPFS?
 
