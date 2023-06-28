@@ -110,19 +110,7 @@ export default function GamePage()  {
         }
       }
 
-      const elapsedTime = currentTime - pet.timestamp;
-      const interval = 14400000; // 4 hours
-      const numPasses = Math.floor(elapsedTime / interval);
-      console.log("Time Passed:", numPasses);
-      for (let i = 0; i < numPasses; i++) {
-        passTime();
-      }
-
-      const timer = setInterval(passTime, interval); // Run passTime() every 24 hours
-      return () => {
-        clearInterval(timer);
-      };
-  }, [pet, currentTime, nft, health, isPaused, isSleeping]);
+  }, [nft, health, isPaused, isSleeping]);
 
 
 
