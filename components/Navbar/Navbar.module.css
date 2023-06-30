@@ -154,9 +154,7 @@
     padding: 8px 8px 8px 8px;
     border-radius: 10px;
     margin-top: 200px;
-    /* margin-bottom: 0px !important;
-    bottom: 120px;
-    position: fixed; */
+    position: fixed; 
   }
 
   .navInput {
