@@ -234,7 +234,7 @@ export default function Activity({ groundHeight, petImage}: GameProps) {
           width={"80px"}
           height={"80px"}
           style={{
-            transform: `translate(${position.x}px, ${position.y}px)`,
+            transform: `translate(${position.x}px, ${position.y}px) scaleX(-1)`,
           }}
         />
       </div>
