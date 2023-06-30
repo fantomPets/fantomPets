@@ -153,9 +153,10 @@
     color: #D15529;
     padding: 8px 8px 8px 8px;
     border-radius: 10px;
-    margin-bottom: 0px !important;
-    bottom: 20px;
-    position: fixed;
+    margin-top: 200px;
+    /* margin-bottom: 0px !important;
+    bottom: 120px;
+    position: fixed; */
   }
 
   .navInput {
