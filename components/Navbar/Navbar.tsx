@@ -41,6 +41,7 @@ export function Navbar({pet, animalId, isGameTime}: Props) {
     const handleSave = async () => {
         try {
           setIsSaving(true);
+          localStorage.removeItem(`petCID${animalId}${address}`);
           const petData = JSON.stringify(pet);
           const petCID = await client.storeBlob(new Blob([petData]));
           console.log("petCID", petCID)
@@ -128,6 +129,11 @@ export function Navbar({pet, animalId, isGameTime}: Props) {
             reader.readAsText(file);
         };
 
+        const handleRestart = () => {
+            localStorage.removeItem(`petCID${animalId}${address}`);
+            window.location.reload();
+        };
+
     return (
         <div className={styles.navContainer}>
             <nav className={styles.nav}>
@@ -160,6 +166,9 @@ export function Navbar({pet, animalId, isGameTime}: Props) {
                                 <button className={styles.navBtn} onClick={handleSound}>
                                     {isPaused ? "Sound On" : "Sound Off"}
                                 </button>
+                            </li>
+                            <li>
+                                <button className={styles.restartBtn} onClick={handleRestart}>Restart</button>
                             </li>
                         </ul>
                           )}

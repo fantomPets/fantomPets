@@ -143,6 +143,21 @@
     border-radius: 10px;
   }
 
+
+
+  .restartBtn {
+    background-color: #1F2225;
+    border: 1px solid #D15529;
+    font-size: 16px;
+    width: 210px;
+    color: #D15529;
+    padding: 8px 8px 8px 8px;
+    border-radius: 10px;
+    margin-bottom: 0px !important;
+    bottom: 20px;
+    position: fixed;
+  }
+
   .navInput {
     border: 1px solid #faebd7;
     font-size: 14px;
