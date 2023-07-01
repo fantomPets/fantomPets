@@ -67,7 +67,7 @@ const initialState: State = {
         if (state.gameOver) {
           return state;
         }
-        const min = 10;
+        const min = 20;
         const max = state.groundHeight - 60;
         const randomY = Math.floor(Math.random() * (max - min + 1)) + min;
         const orb = {
