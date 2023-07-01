@@ -1,181 +1,100 @@
 import React, { useEffect, useRef, useState, useCallback, useReducer } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import styles from './Activity.module.css';
 import { MediaRenderer} from "@thirdweb-dev/react";
+import {
+  move,
+  moveOrbs,
+  generateRandomOrb,
+  setSpacebarPressed,
+  setGameOver,
+  setScore,
+  setOrbScore,
+  restartGame,
+  collisionDetected,
+} from '../../utils/app/actions';
 
 interface GameProps {
   groundHeight: number;
   petImage: any;
 }
 
-const orbsReducer = (prevOrbs: any[], action: any) => {
-  switch (action.type) {
-    case 'MOVE_ORBS':
-      const petX = action.position.x;
-      const petY = action.position.y;
-      const petWidth = 50;
-      const petHeight = 50;
-      const petBoundingBox = {
-        left: petX,
-        right: petX + petWidth,
-        top: petY,
-        bottom: petY + petHeight,
-      };
-
-      const filteredOrbs = [];
-
-      for (let i = 0; i < prevOrbs.length; i++) {
-        const orb = prevOrbs[i];
-        const orbWidth = 10;
-        const orbHeight = 10;
-        const orbBoundingBox = {
-          left: orb.x,
-          right: orb.x + orbWidth,
-          top: orb.y,
-          bottom: orb.y + orbHeight,
-        };
-      
-        const isColliding =
-          petBoundingBox.left < orbBoundingBox.right &&
-          petBoundingBox.right > orbBoundingBox.left &&
-          petBoundingBox.top < orbBoundingBox.bottom &&
-          petBoundingBox.bottom > orbBoundingBox.top;
-      
-        if (isColliding) {
-          action.setOrbScore((prevScore: number) => prevScore + 1);
-        } else if (orb.x - 2 > 0) {
-          const updatedOrb = {
-            ...orb,
-            x: orb.x - 2,
-            y: orb.y,
-          };
-          filteredOrbs.push(updatedOrb);
-        }
-      }
-      
-      return filteredOrbs;
-
-
-    case 'GENERATE_RANDOM_ORB':
-      const min = 10;
-      const max = action.groundHeight - 10;
-      const randomY = Math.floor(Math.random() * (max - min + 1)) + min;
-      const orb = {
-        x: 360,
-        y: randomY,
-      };
-      return [...prevOrbs, orb];
-
-    default:
-      return prevOrbs;
-  }
-};
-
 export default function Activity({ groundHeight, petImage}: GameProps) {
   const gameContainerRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 20, y: 0 });
-  const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
   const [youWin, setYouWin] = useState(false);
-  const [isSpacebarPressed, setIsSpacebarPressed] = useState(false);
-  const [orbs, dispatchOrbs] = useReducer(orbsReducer, []);
-  const [orbScore, setOrbScore] = useState(0);
+  const dispatch = useDispatch();
+  const position = useSelector((state: any) => state.position);
+  const score = useSelector((state: any) => state.score);
+  const gameOver = useSelector((state: any) => state.gameOver);
+  const isSpacebarPressed = useSelector((state: any) => state.isSpacebarPressed);
+  const orbs = useSelector((state:any) => state.orbs);
+  const orbScore = useSelector((state:any) => state.orbScore);
+  const orb = useSelector((state:any) => state.orb);
 
 
-  const move = useCallback(() =>  {
-    setPosition((prevPosition) => ({
-      ...prevPosition,
-      y: isSpacebarPressed ? prevPosition.y - 4 : prevPosition.y + 2,
-    }));
-  }, [isSpacebarPressed]);
 
-    const moveOrbs = useCallback(() => {
-      dispatchOrbs({ type: 'MOVE_ORBS', position, setOrbScore });
-    }, [position, setOrbScore]);
+  const moveHandler = useCallback(() => {
+    dispatch(move());
+  }, [dispatch]);
 
-    const generateRandomOrb = useCallback(() => {
-      dispatchOrbs({ type: 'GENERATE_RANDOM_ORB', groundHeight: groundHeight });
-    }, [dispatchOrbs, groundHeight]);
-    
+  const moveOrbsHandler = useCallback(() => {
+    dispatch(moveOrbs());
+  }, [dispatch]);
 
-    // Touch Controls
-    const handleTouchStart = (event: any) => {
-      event.preventDefault && event.preventDefault();
-      event.stopPropagation && event.stopPropagation();
-      setIsSpacebarPressed(true);
-    };
+  const generateRandomOrbHandler = useCallback(() => {
+    dispatch(generateRandomOrb());
+  }, [dispatch]);
 
-    const handleTouchEnd = (event: any) => {
-      event.preventDefault && event.preventDefault();
-      event.stopPropagation && event.stopPropagation();
-      setIsSpacebarPressed(false);
-    };
-      
+  const collisionDetectedHandler = useCallback(() => {
+    dispatch(collisionDetected());
+  }, [dispatch]);
+
+  const gameOverHandler = useCallback(() => {
+    dispatch(setGameOver(true));
+  }, [dispatch]);
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      moveOrbsHandler();
+      moveHandler();
+      dispatch(setScore());
+      dispatch(setGameOver(true));
+    }, 50);
 
-    const moveOrbs = () => {
-      dispatchOrbs({ type: 'MOVE_ORBS', position, setOrbScore });
+    const orbInterval = setInterval(() => {
+      generateRandomOrbHandler();
+    }, 2000);
+
+    const moveInterval = setInterval(() => {
+      collisionDetectedHandler();
+    }, 1);
+
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(orbInterval);
+      clearInterval(moveInterval);
+     
     };
-  
-    const generateRandomOrb = () => {
-      dispatchOrbs({ type: 'GENERATE_RANDOM_ORB', groundHeight });
-    };
-    
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.code === 'Space' && !isSpacebarPressed) {
-        setIsSpacebarPressed(true);
-        
-      }
-    };
+  }, [dispatch, moveHandler, generateRandomOrbHandler, collisionDetectedHandler, moveOrbsHandler, orb]);
 
-    const handleKeyUp = (event: KeyboardEvent) => {
-      if (event.code === 'Space') {
-        setIsSpacebarPressed(false);
-      }
-    };
-
-    if (!gameOver) {
-      const interval = setInterval(() => {
-        moveOrbs();
-        move();
-        setScore((prevScore) => prevScore + 1);
-      }, 50);
-
-      const orbInterval = setInterval(() => {
-        generateRandomOrb();
-      }, 1000);
-
-      window.addEventListener('keydown', handleKeyDown);
-      window.addEventListener('keyup', handleKeyUp);
-
-      return () => {
-        clearInterval(interval);
-        clearInterval(orbInterval);
-        window.removeEventListener('keydown', handleKeyDown);
-        window.removeEventListener('keyup', handleKeyUp);
-      };
-    }
-  }, [gameOver, isSpacebarPressed, move, groundHeight]);
-
-
-
-  useEffect(() => {
-    if (position.y >= groundHeight-30 || position.y < -30) {
-      setGameOver(true);
-    }
-  }, [ position.y, groundHeight]);
-  
-
-  const restartGame = () => {
-    setIsSpacebarPressed(false);
-    setPosition({ x: 20, y: 0 });
-    setScore(0);
-    setGameOver(false);
-    setYouWin(false);
-    dispatchOrbs({ type: 'RESET' });
-    setOrbScore(0);
+  const restartGameHandler = () => {
+    dispatch(restartGame());
   };
+
+  const handleTouchStart = () => {
+    dispatch(setSpacebarPressed(true));
+  };
+
+  const handleTouchEnd = () => {
+    dispatch(setSpacebarPressed(false));
+  };
+
+  const handleGameOver = () => {
+    dispatch(setGameOver(true));
+  };
+
 
   const handleContextMenu = (event: any) => {
     event.preventDefault();
@@ -188,40 +107,30 @@ export default function Activity({ groundHeight, petImage}: GameProps) {
       {gameOver && (
         <div className={styles.gameOver}>
           Game Over
-          <button onClick={restartGame}>Restart</button>
+          <button onClick={restartGameHandler}>Restart</button>
         </div>
       )}
       {youWin && (
         <div>
           You Win!
-          <button onClick={restartGame}>Restart</button>
+          <button onClick={restartGameHandler}>Restart</button>
         </div>
       )}
       <div className={styles.ground} style={{ bottom: `-${groundHeight}px` }} />
-      {
-      (() => {
-        const orbElements = [];
-        for (let i = 0; i < orbs.length; i++) {
-          const orb = orbs[i];
-          const orbElement = (
-            <Image
-              key={i}
-              className={styles.orb}
-              style={{
-                left: `${orb.x}px`,
-                bottom: `${orb.y}px`,
-              }}
-              src="/orb.png"
-              alt="Orb"
-              width={10}
-              height={10}
-            />
-          );
-          orbElements.push(orbElement);
-        }
-        return orbElements;
-      })()
-    }
+      {orbs.map((orb: any, index: number) => (
+        <Image
+          key={orb.id}
+          className={styles.orb}
+          style={{
+            left: `${orb.x}px`,
+            bottom: `${orb.y}px`,
+          }}
+          src="/orb.png"
+          alt="Orb"
+          width={10}
+          height={10}
+        />
+      ))}
       <div
         className={`${styles.pet} ${gameOver ? 'gameOver' : ''}`}
         style={{

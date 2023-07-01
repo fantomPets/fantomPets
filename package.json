@@ -11,9 +11,11 @@
     "deploy": "next build && next export && npx thirdweb@latest upload out"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@thirdweb-dev/react": "^3.14.4",
     "@thirdweb-dev/sdk": "^3.10.24",
     "@types/node-fetch": "^2.6.4",
+    "@types/react-redux": "^7.1.25",
     "ethers": "^5",
     "mime": "^3.0.0",
     "next": "^13",
@@ -21,9 +23,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
+    "react-redux": "^8.1.1",
     "react-sound": "^1.2.0",
     "react-spinners": "^0.13.8",
     "react-webcam": "^7.1.1",
+    "redux": "^4.2.1",
     "three": "^0.153.0"
   },
   "devDependencies": {
