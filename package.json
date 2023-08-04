@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
-    "@thirdweb-dev/react": "3.14.9",
-    "@thirdweb-dev/sdk": "^3.10.29",
+    "@thirdweb-dev/react": "^3.14.25",
+    "@thirdweb-dev/sdk": "^3.10.44",
     "@types/node-fetch": "^2.6.4",
     "@types/react-redux": "^7.1.25",
     "ethers": "^5",

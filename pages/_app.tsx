@@ -21,7 +21,9 @@ import { store } from '../utils/app/store';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThirdwebProvider activeChain={activeChain}
+    <ThirdwebProvider 
+      activeChain={activeChain}
+      clientId= {process.env.NEXT_PUBLIC_CLIENT_ID as string}
       supportedWallets={[
         metamaskWallet(), 
         localWallet({ persist: true }),
