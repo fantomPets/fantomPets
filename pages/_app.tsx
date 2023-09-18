@@ -20,15 +20,27 @@ import { store } from '../utils/app/store';
 // const activeChain = "fantom";
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+  const walletConnectConfig = walletConnect({projectId: process.env.NEXT_PUBLIC_WALLETCONNECT as string,});
+  walletConnectConfig.meta.name = "fantomPets"; // change the name
+  walletConnectConfig.meta.iconURL = "https://fantompets.com/icon-384x384.png"; // change the icon
+
   return (
     <ThirdwebProvider 
+      dAppMeta={{
+        name: "fantomPets",
+        description: "a virtual pet game on the fantom opera network",
+        logoUrl: "https://fantompets.com/icon-384x384.png",
+        url: "https://fantompets.com",
+        isDarkMode: true,
+      }}
       activeChain={activeChain}
       clientId= {process.env.NEXT_PUBLIC_CLIENT_ID as string}
       supportedWallets={[
         metamaskWallet(), 
         localWallet({ persist: true }),
         coinbaseWallet(), 
-        // walletConnect({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT as string, }),
+        walletConnect(),
         magicLink({
           apiKey: process.env.NEXT_PUBLIC_MAGIC as string,
         }) 
